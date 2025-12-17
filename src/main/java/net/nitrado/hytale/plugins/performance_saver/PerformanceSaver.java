@@ -134,6 +134,11 @@ public class PerformanceSaver extends JavaPlugin {
         }
 
         var now = ManagementFactory.getRuntimeMXBean().getUptime();
+
+        if (this.hasZeroChunksSince == 0) {
+            this.hasZeroChunksSince = now;
+        }
+
         if (now - this.hasZeroChunksSince >= thresholdMs) {
             this.flushMemory();
             this.hasGcRun = true;
