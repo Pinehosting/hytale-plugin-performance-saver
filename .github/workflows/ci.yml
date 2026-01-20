@@ -3,22 +3,88 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - pine-branded-main
     tags:
       - '*'
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  ci:
-    uses: nitrado/hytale-plugin-workflows/.github/workflows/plugin-ci.yml@v1
-    secrets: inherit
-    # Optional: override defaults
-    # with:
-    #   java-version: "25"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
 
+      - name: Determine version
+        id: version
+        run: |
+          # Semver regex with required leading v
+          SEMVER_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$'
+          
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG_NAME="${GITHUB_REF#refs/tags/}"
+            if [[ "$TAG_NAME" =~ $SEMVER_REGEX ]]; then
+              # Strip leading 'v' for maven/jar version
+              VERSION="${TAG_NAME#v}"
+              echo "version=$VERSION" >> $GITHUB_OUTPUT
+              echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+              echo "is_release=true" >> $GITHUB_OUTPUT
+              # Check for prerelease suffix (e.g., -rc1, -alpha1, -beta2)
+              if [[ "$VERSION" == *-* ]]; then
+                echo "is_prerelease=true" >> $GITHUB_OUTPUT
+                echo "Detected semver prerelease tag: $TAG_NAME (version: $VERSION)"
+              else
+                echo "is_prerelease=false" >> $GITHUB_OUTPUT
+                echo "Detected semver release tag: $TAG_NAME (version: $VERSION)"
+              fi
+            else
+              echo "Tag '$TAG_NAME' does not match required format (vX.Y.Z), using snapshot version"
+              COMMIT_HASH=$(git rev-parse --short HEAD)
+              echo "version=0.0.0-${COMMIT_HASH}" >> $GITHUB_OUTPUT
+              echo "is_release=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            COMMIT_HASH=$(git rev-parse --short HEAD)
+            echo "version=0.0.0-${COMMIT_HASH}" >> $GITHUB_OUTPUT
+            echo "is_release=false" >> $GITHUB_OUTPUT
+            echo "No tag detected, using snapshot version"
+          fi
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Determine artifact ID
+        id: artifact
+        run: |
+          ARTIFACT_ID=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+          echo "artifact_id=$ARTIFACT_ID" >> $GITHUB_OUTPUT
+          echo "Detected artifact ID: $ARTIFACT_ID"
+
+      - name: Set up Maven to properly use hytale jar dep
+        run: |
+          mkdir -p $HOME/.m2
+          mvn install:install-file -Dfile=HytaleServer.jar -DgroupId=com.hypixel.hytale -DartifactId=HytaleServer-parent -Dversion=1.0-SNAPSHOT -Dpackaging=jar
+
+      - name: Build (clean package)
+        run: >
+          mvn -B -V
+          clean
+          package
+          -Drevision=${{ steps.version.outputs.version }}
+
+      - name: Create GitHub Release
+        if: steps.version.outputs.is_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag_name }}
+          name: Release ${{ steps.version.outputs.version }}
+          prerelease: ${{ steps.version.outputs.is_prerelease == 'true' }}
+          files: |
+            target/${{ steps.artifact.outputs.artifact_id }}-${{ steps.version.outputs.version }}.jar
+          generate_release_notes: true
