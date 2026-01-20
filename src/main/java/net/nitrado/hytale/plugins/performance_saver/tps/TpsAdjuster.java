@@ -1,9 +1,9 @@
-package net.nitrado.hytale.plugins.performance_saver.tps;
+package com.pinehosting.hytale.plugins.performance_saver.tps;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
-import net.nitrado.hytale.plugins.performance_saver.config.TpsAdjusterConfig;
+import com.pinehosting.hytale.plugins.performance_saver.config.TpsAdjusterConfig;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -68,7 +68,7 @@ public class TpsAdjuster {
 
     private int getPlayerCount() {
         // Universe.get().getPlayerCount() seems to be faulty
-        // See https://github.com/nitrado/hytale-plugin-performance-saver/issues/7
+        // See https://github.com/pinehosting/hytale-plugin-performance-saver/issues/7
         var universePlayerCount = Universe.get().getPlayerCount();
 
         var worldSumPlayerCount = 0;

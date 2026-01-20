@@ -1,4 +1,4 @@
-package net.nitrado.hytale.plugins.performance_saver.viewradius;
+package com.pinehosting.hytale.plugins.performance_saver.viewradius;
 
 import com.sun.management.GarbageCollectionNotificationInfo;
 import javax.management.*;

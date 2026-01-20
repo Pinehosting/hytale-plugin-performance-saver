@@ -1,8 +1,8 @@
-package net.nitrado.hytale.plugins.performance_saver.chunks;
+package com.pinehosting.hytale.plugins.performance_saver.chunks;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.universe.Universe;
-import net.nitrado.hytale.plugins.performance_saver.config.ChunkGarbageCollectorConfig;
+import com.pinehosting.hytale.plugins.performance_saver.config.ChunkGarbageCollectorConfig;
 
 public class ChunkGarbageCollector {
 

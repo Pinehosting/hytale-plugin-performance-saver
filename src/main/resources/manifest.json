@@ -1,5 +1,5 @@
 {
-  "Group": "Nitrado",
+  "Group": "PineHosting",
   "Name": "PerformanceSaver",
   "Version": "1.0.0",
   "Authors": [
@@ -9,7 +9,7 @@
       "Url": "https://www.nitrado.net"
     }
   ],
-  "Website": "https://www.nitrado.net",
-  "Main": "net.nitrado.hytale.plugins.performance_saver.PerformanceSaverPlugin",
+  "Website": "https://www.pinehosting.com",
+  "Main": "com.pinehosting.hytale.plugins.performance_saver.PerformanceSaverPlugin",
   "ServerVersion": "*"
 }

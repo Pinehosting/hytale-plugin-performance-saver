@@ -1,4 +1,4 @@
-package net.nitrado.hytale.plugins.performance_saver.viewradius;
+package com.pinehosting.hytale.plugins.performance_saver.viewradius;
 
 public interface Monitor {
     ViewRadiusResult getViewRadiusChange(long lastAdjustmentDeltaNanos);

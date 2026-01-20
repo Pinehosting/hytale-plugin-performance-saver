@@ -1,7 +1,7 @@
-package net.nitrado.hytale.plugins.performance_saver.viewradius;
+package com.pinehosting.hytale.plugins.performance_saver.viewradius;
 
 import com.hypixel.hytale.logger.HytaleLogger;
-import net.nitrado.hytale.plugins.performance_saver.config.GcMonitorConfig;
+import com.pinehosting.hytale.plugins.performance_saver.config.GcMonitorConfig;
 
 import java.lang.management.ManagementFactory;
 

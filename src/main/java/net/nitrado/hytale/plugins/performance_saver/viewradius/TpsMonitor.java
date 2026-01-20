@@ -1,11 +1,11 @@
-package net.nitrado.hytale.plugins.performance_saver.viewradius;
+package com.pinehosting.hytale.plugins.performance_saver.viewradius;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.metrics.metric.HistoricMetric;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.commands.world.perf.WorldPerfCommand;
-import net.nitrado.hytale.plugins.performance_saver.config.TpsMonitorConfig;
+import com.pinehosting.hytale.plugins.performance_saver.config.TpsMonitorConfig;
 
 public class TpsMonitor implements Monitor {
     private HytaleLogger logger;

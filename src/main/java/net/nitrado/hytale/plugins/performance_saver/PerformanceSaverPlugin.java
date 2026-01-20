@@ -1,4 +1,4 @@
-package net.nitrado.hytale.plugins.performance_saver;
+package com.pinehosting.hytale.plugins.performance_saver;
 
 import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
@@ -8,14 +8,14 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.util.Config;
-import net.nitrado.hytale.plugins.performance_saver.chunks.ChunkGarbageCollector;
-import net.nitrado.hytale.plugins.performance_saver.config.PerformanceSaverPluginConfig;
-import net.nitrado.hytale.plugins.performance_saver.config.RestoreConfig;
-import net.nitrado.hytale.plugins.performance_saver.tps.TpsAdjuster;
-import net.nitrado.hytale.plugins.performance_saver.viewradius.GcMonitor;
-import net.nitrado.hytale.plugins.performance_saver.viewradius.Monitor;
-import net.nitrado.hytale.plugins.performance_saver.viewradius.TpsMonitor;
-import net.nitrado.hytale.plugins.performance_saver.viewradius.ViewRadiusResult;
+import com.pinehosting.hytale.plugins.performance_saver.chunks.ChunkGarbageCollector;
+import com.pinehosting.hytale.plugins.performance_saver.config.PerformanceSaverPluginConfig;
+import com.pinehosting.hytale.plugins.performance_saver.config.RestoreConfig;
+import com.pinehosting.hytale.plugins.performance_saver.tps.TpsAdjuster;
+import com.pinehosting.hytale.plugins.performance_saver.viewradius.GcMonitor;
+import com.pinehosting.hytale.plugins.performance_saver.viewradius.Monitor;
+import com.pinehosting.hytale.plugins.performance_saver.viewradius.TpsMonitor;
+import com.pinehosting.hytale.plugins.performance_saver.viewradius.ViewRadiusResult;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
